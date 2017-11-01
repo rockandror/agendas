@@ -8,9 +8,11 @@ feature 'User index page', :devise do
   end
 
   scenario 'user sees own email address' do
-    user = FactoryGirl.create(:user, :admin)
+    user = create(:user, :admin)
     login_as(user, scope: :user)
+
     visit users_path
+    
     expect(page).to have_content user.email
   end
 

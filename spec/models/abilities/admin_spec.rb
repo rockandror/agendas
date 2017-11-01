@@ -16,5 +16,5 @@ describe "Abilities::Administrator" do
   it { should be_able_to(:show, holder) }
   it { should be_able_to(:edit, holder) }
   it { should be_able_to(:destroy, holder) }
-
+  
 end

@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 describe "Abilities::User" do
+
   subject(:ability) { Ability.new(user) }
 
   let(:user) { create(:user) }
@@ -14,5 +15,4 @@ describe "Abilities::User" do
   it { should_not be_able_to(:manage, User) }
   it { should_not be_able_to(:manage, Area) }
   it { should_not be_able_to(:manage, Holder) }
-
 end

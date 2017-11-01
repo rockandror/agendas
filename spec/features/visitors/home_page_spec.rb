@@ -2,40 +2,53 @@ feature 'Home page' do
 
   scenario 'visit the home page' do
     visit root_path
+
     expect(page).to have_content I18n.t 'main.title'
   end
 
   scenario 'visit holder agenda page' do
-    @event = FactoryGirl.create(:event)
-    expect(@event.position.holder.full_name).to eq('First Last')
+    manage = create(:manage)
+    event = create(:event, position: manage.holder.positions.first)
+
+    expect(event.position.holder.full_name).to eq('First Last')
     visit root_path
-    click_link @event.position.holder.full_name
-    expect(page).to have_content @event.position.holder.full_name
+    click_link event.position.holder.full_name
+
+    expect(page).to have_content event.position.holder.full_name
   end
 
   scenario 'visit search by keyword result page' do
-    @event = FactoryGirl.create(:event, title: 'New event from Capybara')
+    manage = create(:manage)
+    event = create(:event, title: 'New event from Capybara', position: manage.holder.positions.first)
     visit root_path
+
     fill_in :keyword, with: 'Capybara'
-    click_button I18n.t('main.form.search')
-    expect(page).to have_content @event.title
+    click_button "Buscar"
+
+    expect(page).to have_content event.title
   end
 
   scenario 'visit search by keyword and area result page' do
-    @event = FactoryGirl.create(:event, title: 'New event from Capybara')
+    manage = create(:manage)
+    event = create(:event, title: 'New event from Capybara', position: manage.holder.positions.first)
     visit root_path
+
     fill_in :keyword, with: 'Capybara'
-    select @event.position.area.title, from: :area
-    click_button I18n.t('main.form.search')
-    expect(page).to have_content @event.title
+    select event.position.area.title, from: :area
+    click_button "Buscar"
+
+    expect(page).to have_content event.title
   end
 
   scenario 'visit non results search page' do
-    @event = FactoryGirl.create(:event, title: 'New not found event')
+    manage = create(:manage)
+    event = create(:event, title: 'New not found event', position: manage.holder.positions.first)
     visit root_path
+
     fill_in :keyword, with: 'Capybara'
     click_button I18n.t('main.form.search')
-    expect(page).not_to have_content @event.title
+
+    expect(page).not_to have_content event.title
   end
 
 end
