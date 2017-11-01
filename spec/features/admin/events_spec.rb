@@ -38,7 +38,7 @@ feature 'Events' do
     expect(page).to have_content 'New event title'
   end
 
-  scenario 'visit search by keyword and area result page' do
+  scenario 'visit search by keyword and area result page', :solr do
     manage = create :manage, user: user
     event = create(:event, title: 'New event from Capybara', position: manage.holder.positions.first)
 

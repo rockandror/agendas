@@ -11,5 +11,5 @@ before_script:
   - "for i in config/*.example; do cp \"$i\" \"${i/.example}\"; done"
   - bundle exec rake db:drop db:create db:migrate
 script:
-  - "bundle exec rake assets:precompile RAILS_ENV=test"
-  - "bundle exec rspec spec"
+  - RAILS_ENV=test bundle exec rake assets:precompile
+  - RAILS_ENV=test bundle exec rspec spec

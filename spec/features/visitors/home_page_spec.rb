@@ -6,10 +6,11 @@ feature 'Home page' do
     expect(page).to have_content I18n.t 'main.title'
   end
 
-  scenario 'visit holder agenda page' do
+  scenario 'visit holder agenda page', :solr do
     manage = create(:manage)
     event = create(:event, position: manage.holder.positions.first)
-
+    Sunspot.commit
+    
     expect(event.position.holder.full_name).to eq('First Last')
     visit root_path
     click_link event.position.holder.full_name
@@ -17,7 +18,7 @@ feature 'Home page' do
     expect(page).to have_content event.position.holder.full_name
   end
 
-  scenario 'visit search by keyword result page' do
+  scenario 'visit search by keyword result page', :solr do
     manage = create(:manage)
     event = create(:event, title: 'New event from Capybara', position: manage.holder.positions.first)
     visit root_path
@@ -28,7 +29,7 @@ feature 'Home page' do
     expect(page).to have_content event.title
   end
 
-  scenario 'visit search by keyword and area result page' do
+  scenario 'visit search by keyword and area result page', :solr do
     manage = create(:manage)
     event = create(:event, title: 'New event from Capybara', position: manage.holder.positions.first)
     visit root_path
