@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require 'sunspot_test/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

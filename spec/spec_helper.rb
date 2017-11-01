@@ -1,5 +1,5 @@
 require 'simplecov'
-require "codeclimate-test-reporter"
+require 'codeclimate-test-reporter'
 require 'factory_girl_rails'
 
 SimpleCov.start
