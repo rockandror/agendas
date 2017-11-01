@@ -4,6 +4,7 @@ addons:
 rvm:
  - "2.2.1"
 cache: bundler
+bundler_args: --without production development
 before_script:
   - "for i in config/*.example; do cp \"$i\" \"${i/.example}\"; done"
   - bundle exec rake db:setup
