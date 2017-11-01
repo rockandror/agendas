@@ -12,7 +12,7 @@ class Position < ActiveRecord::Base
   validate :date_to_before_date_from
 
   scope :current, -> { where(to: nil) }
-  scope :area_filtered, lambda{ |area| self.where(area_id: [area, Area.find(area).descendant_ids]) if area.present? }
+  scope :area_filtered, lambda { |area| where("area_id IN (?)", Area.find(area).subtree_ids) if area.present? }
 
   private
 
