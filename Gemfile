@@ -68,9 +68,10 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'poltergeist', '~> 1.15.0'
   gem 'simplecov'
   gem 'codeclimate-test-reporter'
 end
