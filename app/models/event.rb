@@ -6,7 +6,6 @@ class Event < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :finders]
 
-
   # Relations
   belongs_to :user
   belongs_to :position
@@ -17,7 +16,8 @@ class Event < ActiveRecord::Base
 
   # Validations
   validates_presence_of :title, :position
-  validate :participants_uniqueness, :position_not_in_participants
+  validate :participants_uniqueness
+  validate :position_not_in_participants, if: -> { position.present? }
 
   # Nested models
   accepts_nested_attributes_for :attendees, :reject_if => :all_blank, :allow_destroy => true
@@ -26,7 +26,9 @@ class Event < ActiveRecord::Base
 
   def participants_uniqueness
     participants = self.participants.reject(&:marked_for_destruction?)
-    errors.add(:base, I18n.t('backend.participants_uniqueness')) unless participants.map{|x| x.position_id}.uniq.count == participants.to_a.count
+    unless participants.map{|x| x.position_id}.uniq.count == participants.to_a.count
+      errors.add(:base, I18n.t('backend.participants_uniqueness'))
+    end
   end
 
   def position_not_in_participants
@@ -48,11 +50,11 @@ class Event < ActiveRecord::Base
     end
 
     text :holder_name do
-      self.position.holder.full_name
+      self.position.holder.full_name if self.position.holder.present?
     end
 
     integer :holder_id do
-      self.position.holder.id
+      self.position.holder.id if self.position.holder.present?
     end
 
     text :holder_position do

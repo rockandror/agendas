@@ -1,21 +1,17 @@
 class User < ActiveRecord::Base
 
-  # Relations
   has_many :events
   has_many :manages, dependent: :destroy
   has_many :holders, through: :manages
 
   accepts_nested_attributes_for :manages, :reject_if => :all_blank, :allow_destroy => true
 
-
-  # Validations
   validates_presence_of :first_name, :last_name, :email
   validate :manages_uniqueness
 
   enum role: [:user, :admin]
   after_initialize :set_default_role, if: :new_record?
   after_initialize :set_active, if: :new_record?
-
 
   scope :active, -> {where(:active => true)}
 
@@ -33,7 +29,9 @@ class User < ActiveRecord::Base
 
   def manages_uniqueness
     manages = self.manages.reject(&:marked_for_destruction?)
-    errors.add(:base, I18n.t('backend.participants_uniqueness')) unless manages.map{|x| x.holder_id}.uniq.count == manages.to_a.count
+    unless manages.map{|x| x.holder_id}.uniq.count == manages.to_a.count
+      errors.add(:base, I18n.t('backend.participants_uniqueness'))
+    end
   end
 
   # Include default devise modules. Others available are:

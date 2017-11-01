@@ -25,5 +25,4 @@ class Attachment < ActiveRecord::Base
     "#{self.file_file_name.gsub( /[^a-zA-Z0-9_\.]/, '_')}"
   end
 
-
 end

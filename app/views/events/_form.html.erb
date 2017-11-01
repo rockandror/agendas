@@ -23,10 +23,12 @@
       <%= f.label :scheduled, t('backend.date') %>
       <%= f.text_field :scheduled, class: 'fdatepicker' %>
       <% if @holders.count > 1 %>
-      <%= f.label :position_id, t('backend.main_position') %>
-      <%= f.select :position_id, @holders.order(:last_name).map{|holder| [holder.full_name_comma, holder.current_position.id]}, prompt: t('backend.select') %>
+        <%= f.label :position_id, t('backend.main_position') %>
+        <%= f.select :position_id,
+                     @holders.order(:last_name).map{|holder| [holder.full_name_comma, holder.current_position.id]},
+                     prompt: t('backend.select') %>
       <% else %>
-      <%= f.hidden_field :position_id, value: @holders.first.current_position.id %>
+        <%= f.hidden_field :position_id, value: @holders.first.current_position.id %>
       <% end %>
     </fieldset>
 
@@ -42,7 +44,11 @@
             <%= render 'participant_fields', f: participant %>
         <% end %>
       </div>
-      <%= link_to_add_association t('backend.add'), f, :participants, :class => "button radius tiny info right", 'data-association-insertion-method' => 'append', 'data-association-insertion-node' => '#participants' %>
+      <%= link_to_add_association t('backend.add'), f,
+                                  :participants,
+                                  :class => "button radius tiny info right",
+                                  'data-association-insertion-method' => 'append',
+                                  'data-association-insertion-node' => '#participants' %>
     </fieldset>
 
 
