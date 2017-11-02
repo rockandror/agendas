@@ -1,4 +1,4 @@
-feature 'Event page' do
+feature 'Events' do
 
   scenario 'visit the event detail page', :solr do
     manage = create(:manage)

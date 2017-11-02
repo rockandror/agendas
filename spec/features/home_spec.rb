@@ -10,7 +10,7 @@ feature 'Home page' do
     manage = create(:manage)
     event = create(:event, position: manage.holder.positions.first)
     Sunspot.commit
-    
+
     expect(event.position.holder.full_name).to eq('First Last')
     visit root_path
     click_link event.position.holder.full_name
