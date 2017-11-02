@@ -1,4 +1,4 @@
-feature 'User delete', :devise, :js do
+feature 'User delete', :devise do
 
   scenario 'user can not delete own account' do
     user = create(:user, :admin)
@@ -7,7 +7,7 @@ feature 'User delete', :devise, :js do
     visit users_path
 
     within "#user_#{user.id}" do
-      find('a.delete').trigger('click')
+      find('a.delete').click
     end
     expect(page).to have_content 'No ha sido posible realizar la operación'
   end
