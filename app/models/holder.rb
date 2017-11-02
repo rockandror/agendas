@@ -1,3 +1,4 @@
+
 class Holder < ActiveRecord::Base
 
   # Relations
