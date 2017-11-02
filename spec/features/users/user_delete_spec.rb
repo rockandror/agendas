@@ -7,7 +7,7 @@ feature 'User delete', :devise, :js do
     visit users_path
 
     within "#user_#{user.id}" do
-      find('a.delete').click
+      find('a.delete').trigger('click')
     end
     expect(page).to have_content 'No ha sido posible realizar la operación'
   end
