@@ -1,11 +1,4 @@
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'User edit', :devise do
-
-  after(:each) do
-    Warden.test_reset!
-  end
 
   scenario 'admin can change own email address' do
     user = create(:user, :admin)

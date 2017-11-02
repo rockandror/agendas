@@ -1,11 +1,4 @@
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'User profile page', :devise do
-
-  after(:each) do
-    Warden.test_reset!
-  end
 
   scenario 'user cannot see own profile' do
     user = create(:user)
