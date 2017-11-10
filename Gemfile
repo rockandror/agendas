@@ -71,4 +71,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'codeclimate-test-reporter'
+  gem 'sunspot-rails-tester'
 end
