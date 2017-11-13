@@ -1,7 +1,15 @@
+sudo: required
 language: ruby
 addons:
   postgresql: "9.4"
   chrome: beta
+install: # Install ChromeDriver (64bits).
+  - wget -N http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 rvm:
  - "2.2.1"
 cache: bundler
@@ -12,7 +20,8 @@ before_script:
   - "for i in config/*.example; do cp \"$i\" \"${i/.example}\"; done"
   - bundle exec rake db:drop db:create db:migrate
 script:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - whereis google-chrome-stable
+  - whereis chromedriver
   - RAILS_ENV=test bundle exec rake assets:precompile
   - RAILS_ENV=test bundle exec rake sunspot:solr:start
   - RAILS_ENV=test bundle exec rspec spec
