@@ -1,7 +1,7 @@
 language: ruby
 addons:
   postgresql: "9.4"
-  chrome: stable
+  chrome: beta
 rvm:
  - "2.2.1"
 cache: bundler
@@ -14,4 +14,6 @@ before_script:
 script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - RAILS_ENV=test bundle exec rake assets:precompile
+  - RAILS_ENV=test bundle exec rake sunspot:solr:start
   - RAILS_ENV=test bundle exec rspec spec
+  - RAILS_ENV=test bundle exec rake sunspot:solr:stop
