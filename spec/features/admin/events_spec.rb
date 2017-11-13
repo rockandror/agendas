@@ -9,7 +9,7 @@ feature 'Events' do
       signin(@user_manager.email, @user_manager.password)
     end
 
-    scenario 'visit the events index page' do
+    scenario 'visit the events index page', :js do
       visit events_path
       expect(page).to have_content I18n.t 'backend.events'
     end
