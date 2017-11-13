@@ -9,8 +9,6 @@ cache: bundler
 bundler_args: --without production development
 before_install:
   - # Install ChromeDriver (64bits).
-  - sudo apt-get update
-  - sudo apt-get install chromedriver
   - wget -N http://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip -P ~/
   - unzip ~/chromedriver_linux64.zip -d ~/
   - rm ~/chromedriver_linux64.zip
