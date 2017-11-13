@@ -3,18 +3,18 @@ language: ruby
 addons:
   postgresql: "9.4"
   chrome: beta
-install: # Install ChromeDriver (64bits).
+rvm:
+ - "2.2.1"
+cache: bundler
+bundler_args: --without production development
+before_install:
+  - # Install ChromeDriver (64bits).
   - wget -N http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip -P ~/
   - unzip ~/chromedriver_linux64.zip -d ~/
   - rm ~/chromedriver_linux64.zip
   - sudo mv -f ~/chromedriver /usr/local/share/
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
-rvm:
- - "2.2.1"
-cache: bundler
-bundler_args: --without production development
-before_install:
   - gem install bundler
 before_script:
   - "for i in config/*.example; do cp \"$i\" \"${i/.example}\"; done"
